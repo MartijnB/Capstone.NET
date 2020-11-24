@@ -55,7 +55,17 @@ namespace Gee.External.Capstone {
         ///     Create a Native Capstone.
         /// </summary>
         static NativeCapstone() {
-            NativeCapstone.LoadLibrary();
+            OperatingSystem os = Environment.OSVersion;
+            PlatformID     pid = os.Platform;
+            
+            switch (pid) {
+                case PlatformID.Win32NT:
+                case PlatformID.Win32S:
+                case PlatformID.Win32Windows:
+                case PlatformID.WinCE:
+                    NativeCapstone.LoadLibrary();
+                    break;
+            }
         }
 
         /// <summary>
